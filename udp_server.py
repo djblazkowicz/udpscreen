@@ -8,11 +8,6 @@ import pygame
 
 MAX_DGRAM = 65536
 
-screen = pygame.display.set_mode(
-    (1920, 1080),
-    pygame.FULLSCREEN
-)
-
 def dump_buffer(s):
     """ Emptying buffer frame """
     while True:
@@ -22,13 +17,15 @@ def dump_buffer(s):
             print("finish emptying buffer")
             break
 
-def blitCamFrame(frame,screen):
-    screen.blit(frame,(0,0))
-    return screen
 
 def main():
     """ Getting image udp frame &
     concate before decode and output image """
+
+    screen = pygame.display.set_mode(
+    (1920, 1080),
+    pygame.FULLSCREEN
+    )
     
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     s.bind(('', 55555))
@@ -45,7 +42,7 @@ def main():
             #try:
             img = cv2.resize(img, (1920,1080))
                 #cv2.imshow('frame', img)
-            screen=blitCamFrame(img,screen)
+            screen.blit(img,(0,0))
             pygame.display.flip()
             #except:
             #    pass
