@@ -33,7 +33,7 @@ def main():
             dat += seg[1:]
             img = cv2.imdecode(np.frombuffer(dat, dtype=np.uint8), 1)
             try:
-                img = cv2.resize(img, (1920,1080))
+                #img = cv2.resize(img, (1920,1080))
                 cv2.imshow('frame', img)
             except:
                 pass
