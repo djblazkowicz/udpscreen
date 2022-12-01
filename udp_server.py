@@ -4,6 +4,7 @@ import numpy as np
 import socket
 import struct
 import time
+import pygame
 
 MAX_DGRAM = 65536
 
@@ -16,10 +17,19 @@ def dump_buffer(s):
             print("finish emptying buffer")
             break
 
+def blitCamFrame(frame,screen):
+    screen.blit(frame,(0,0))
+    return screen
+
 def main():
     """ Getting image udp frame &
     concate before decode and output image """
     
+    screen = pygame.display.set_mode(
+        (1920, 1080),
+        pygame.FULLSCREEN
+    )
+
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     s.bind(('', 55555))
     dat = b''
@@ -34,7 +44,9 @@ def main():
             img = cv2.imdecode(np.frombuffer(dat, dtype=np.uint8), 1)
             try:
                 #img = cv2.resize(img, (1920,1080))
-                cv2.imshow('frame', img)
+                #cv2.imshow('frame', img)
+                screen=blitCamFrame(img,screen)
+                pygame.display.flip()
             except:
                 pass
             dat = b''
