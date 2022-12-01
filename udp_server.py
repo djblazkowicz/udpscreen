@@ -51,7 +51,7 @@ def main():
             except:
                 pass
             dat = b''
-            cv2.waitKey(1)
+            cv2.waitKey(16)
 
 if __name__ == "__main__":
     main()
