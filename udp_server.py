@@ -8,6 +8,11 @@ import pygame
 
 MAX_DGRAM = 65536
 
+screen = pygame.display.set_mode(
+    (1920, 1080),
+    pygame.FULLSCREEN
+)
+
 def dump_buffer(s):
     """ Emptying buffer frame """
     while True:
@@ -25,11 +30,6 @@ def main():
     """ Getting image udp frame &
     concate before decode and output image """
     
-    screen = pygame.display.set_mode(
-        (1920, 1080),
-        pygame.FULLSCREEN
-    )
-
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     s.bind(('', 55555))
     dat = b''
@@ -42,13 +42,13 @@ def main():
         else:
             dat += seg[1:]
             img = cv2.imdecode(np.frombuffer(dat, dtype=np.uint8), 1)
-            try:
-                img = cv2.resize(img, (1920,1080))
+            #try:
+            img = cv2.resize(img, (1920,1080))
                 #cv2.imshow('frame', img)
-                screen=blitCamFrame(img,screen)
-                pygame.display.flip()
-            except:
-                pass
+            screen=blitCamFrame(img,screen)
+            pygame.display.flip()
+            #except:
+            #    pass
             dat = b''
             cv2.waitKey(1)
 
