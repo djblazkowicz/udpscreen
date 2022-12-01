@@ -39,16 +39,17 @@ def main():
         else:
             dat += seg[1:]
             img = cv2.imdecode(np.frombuffer(dat, dtype=np.uint8), 1)
-            #try:
-            img = cv2.resize(img, (1920,1080))
-            frame=cv2.cvtColor(img,cv2.COLOR_BGR2RGB)
-            frame=np.rot90(frame)
-            frame=pygame.surfarray.make_surface(frame)
+            try:
+                cv2.flip(img,1,img)
+                img = cv2.resize(img, (1920,1080))
+                frame=cv2.cvtColor(img,cv2.COLOR_BGR2RGB)
+                frame=np.rot90(frame)
+                frame=pygame.surfarray.make_surface(frame)
                 #cv2.imshow('frame', img)
-            screen.blit(frame,(0,0))
-            pygame.display.flip()
-            #except:
-            #    pass
+                screen.blit(frame,(0,0))
+                pygame.display.flip()
+            except:
+                pass
             dat = b''
             cv2.waitKey(1)
 
